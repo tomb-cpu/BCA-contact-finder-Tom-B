@@ -52,3 +52,22 @@ matches against (Apollo does substring/keyword matching, so thematic entries
 like `"Fixed Income"` or `"Geo-Macro"` will match titles containing that
 phrase). `MAX_CONTACTS` controls how many contacts are returned per search
 (default 20).
+
+## Same search, as a Claude agent (MCP)
+
+The identical search — resolve a firm, find its decision-makers, unlock
+emails — is also available as a Claude Code subagent, `contact-finder`
+(`.claude/agents/contact-finder.md`), instead of the web UI.
+
+- `mcp/apollo-server.ts` wraps `lib/apollo.ts`'s existing `searchContacts()`
+  pipeline as a single MCP tool, `find_investment_contacts`, exposed over
+  stdio and registered in `.mcp.json` under the `apollo-contacts` server. No
+  logic is duplicated — it's the same Apollo pipeline the web app uses.
+- Requires the same `APOLLO_API_KEY` env var (Claude Code passes through
+  your shell's env per `.mcp.json`; run `npm run mcp:apollo` to run/test the
+  server standalone).
+- Dakota Marketplace is an optional supplementary source: connect it as a
+  remote MCP connector in claude.ai (Settings → Connectors), enable it for
+  the chat/session, and the `contact-finder` agent will use it automatically
+  alongside Apollo if its tools are present — no repo changes needed for
+  that half.
