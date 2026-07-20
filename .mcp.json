@@ -2,10 +2,7 @@
   "mcpServers": {
     "apollo-contacts": {
       "command": "npx",
-      "args": ["tsx", "mcp/apollo-server.ts"],
-      "env": {
-        "APOLLO_API_KEY": "${APOLLO_API_KEY}"
-      }
+      "args": ["tsx", "mcp/apollo-server.ts"]
     }
   }
 }
